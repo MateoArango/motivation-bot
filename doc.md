@@ -1,20 +1,25 @@
 ```mermaid
-sequenceDiagram
-    participant C as Ciudadano
-    participant S as Sistema
-    participant T as Tramitador
+flowchart TD
 
-    rect rgb(220, 240, 255)
-        S->>C: Envía alerta
-    end
+    A([Ciudadano recibe alerta])
 
-    alt Confirmar valor
-        C->>S: Confirma pago
-        S->>C: Link activo
-    else Corregir valor
-        C->>S: Solicita corrección
-        S->>T: Notifica corrección
-        T->>S: Registra nuevo acto
-        S->>C: Nueva liquidación
-    end
+    A --> B{¿Qué decide?}
+
+    B -->|Confirmar valor| C[Pago habilitado]
+    C --> D[Flujo normal]
+
+    B -->|Corregir valor| E[Pago bloqueado]
+    E --> F[Notificar tramitador]
+    F --> G[Ciudadano va a notaría]
+    G --> H[Registrar acto corregido]
+    H --> I[Nueva liquidación]
+    I --> J[Nuevo link de pago]
+
+    classDef ciudadano fill:#2563eb,color:#fff,stroke:#1e40af;
+    classDef sistema fill:#059669,color:#fff,stroke:#065f46;
+    classDef alerta fill:#dc2626,color:#fff,stroke:#7f1d1d;
+
+    class A ciudadano;
+    class C,D,H,I,J sistema;
+    class E,F alerta;
 ```
