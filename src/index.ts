@@ -31,18 +31,15 @@ client.once('clientReady', (c) => {
     try {
       // Fetching from the public external API
       const response = await fetch('https://zenquotes.io/api/random');
-      
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
       const data = await response.json() as ZenQuote[];
-      const { q, a } = data[0];
-
-      // Sending the dynamically fetched quote
+// QA Check: Make sure data[0] actually exists before destructuring
+      const firstQuote = data[0];
+      if (!firstQuote) {
+        throw new Error('API returned an empty dataset');
+      }
+      const { q, a } = firstQuote;
       await channel.send(`🌟 **Daily Boost:** "${q}" — *${a}*`);
-      console.log('🚀 Motivation injected into Discord successfully.');
-
+      console.log('🚀 API Motivation delivered.');
     } catch (error) {
       // QA Mindset: Graceful error handling so your bot doesn't crash on network failures
       console.error("❌ Failed to fetch or send the dynamic quote:", error);
