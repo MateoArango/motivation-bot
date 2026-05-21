@@ -48,3 +48,20 @@ client.once('clientReady', (c) => {
 });
 
 client.login(process.env.DISCORD_TOKEN);
+
+
+
+// Keep-alive server to prevent unservice on platforms like Render
+import express from 'express';
+const app = express();
+const PORT = process.env.PORT || 3000;
+
+// Expose a health check endpoint
+app.get('/', (req, res) => {
+  res.send('🤖 Bot is awake and running smoothly!');
+});
+
+// Start the web server
+app.listen(PORT, () => {
+  console.log(`🌐 Keep-alive server listening on port ${PORT}`);
+});
