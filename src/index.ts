@@ -44,9 +44,6 @@ client.once('ready', (c) => {
       // QA Mindset: Graceful error handling so your bot doesn't crash on network failures
       console.error("❌ Failed to fetch or send the dynamic quote:", error);
     }
-  },
-  {
-  timezone: "America/Bogota"
   }
 );
 });
