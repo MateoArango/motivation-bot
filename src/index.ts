@@ -14,11 +14,11 @@ interface ZenQuote {
   a: string; // The author name
 }
 
-client.once('clientReady', (c) => {
+client.once('ready', (c) => {
   console.log(`✅ Success! ${c.user.tag} is now monitoring the motivation levels.`);
 
   // Scheduled to run every minute for testing
-  cron.schedule('0 13 * * *', async () => {
+  cron.schedule('* * * * *', async () => {
     const channel = client.channels.cache.get(process.env.CHANNEL_ID!) as TextChannel;
     
     if (!channel) {
