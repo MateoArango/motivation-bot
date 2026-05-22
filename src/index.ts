@@ -14,7 +14,7 @@ interface ZenQuote {
   a: string; // The author name
 }
 
-client.once('ready', (c) => {
+client.once('clientReady', (c) => {
   console.log(`✅ Success! ${c.user.tag} is now monitoring the motivation levels.`);
 
   // Scheduled to run every minute for testing
