@@ -1,6 +1,7 @@
 import { Client, GatewayIntentBits, TextChannel } from 'discord.js';
 import cron from 'node-cron';
 import dotenv from 'dotenv';
+import express from 'express';
 
 dotenv.config();
 
@@ -53,7 +54,7 @@ client.login(process.env.DISCORD_TOKEN);
 
 
 // Keep-alive server to prevent unservice on platforms like Render
-import express from 'express';
+
 const app = express();
 const PORT = process.env.PORT || 3000;
 
