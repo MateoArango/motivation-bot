@@ -18,7 +18,7 @@ client.once('ready', (c) => {
   console.log(`✅ Success! ${c.user.tag} is now monitoring the motivation levels.`);
 
   // Scheduled to run every minute for testing
-  cron.schedule('0 8 * * *', async () => {
+  cron.schedule('0 13 * * *', async () => {
     const channel = client.channels.cache.get(process.env.CHANNEL_ID!) as TextChannel;
     
     if (!channel) {
