@@ -14,7 +14,7 @@ interface ZenQuote {
   a: string; // The author name
 }
 
-client.once('clientReady', (c) => {
+client.once('ready', (c) => {
   console.log(`✅ Success! ${c.user.tag} is now monitoring the motivation levels.`);
 
   // Scheduled to run every minute for testing
@@ -44,7 +44,11 @@ client.once('clientReady', (c) => {
       // QA Mindset: Graceful error handling so your bot doesn't crash on network failures
       console.error("❌ Failed to fetch or send the dynamic quote:", error);
     }
-  });
+  },
+  {
+  timezone: "America/Bogota"
+  }
+);
 });
 
 client.login(process.env.DISCORD_TOKEN);
