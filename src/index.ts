@@ -18,7 +18,7 @@ client.once('ready', (c) => {
   console.log(`✅ Success! ${c.user.tag} is now monitoring the motivation levels.`);
 
   // Scheduled to run every minute for testing
-  cron.schedule('0 16 * * *', async () => {
+  cron.schedule('0 12 * * *', async () => { // 7am
     const channel = client.channels.cache.get(process.env.CHANNEL_ID!) as TextChannel;
     
     if (!channel) {
@@ -38,7 +38,7 @@ client.once('ready', (c) => {
         throw new Error('API returned an empty dataset');
       }
       const { q, a } = firstQuote;
-      await channel.send(`🌟 **Daily Boost:** "${q}" — *${a}*`);
+      await channel.send(`🚀 **Daily Boost:** "${q}" — *${a}*`);
       console.log('🚀 API Motivation delivered.');
     } catch (error) {
       // QA Mindset: Graceful error handling so your bot doesn't crash on network failures
