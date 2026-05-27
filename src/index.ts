@@ -18,8 +18,8 @@ interface ZenQuote {
 client.once('ready', (c) => {
   console.log(`✅ Success! ${c.user.tag} is now monitoring the motivation levels.`);
 
-  // Scheduled to run every minute for testing
-  cron.schedule('0 12 * * *', async () => { // 7am
+  // Scheduled to run at 7 am in Colombia time
+  cron.schedule('0 12 * * *', async () => { // This is because the server has 5 hours more
     const channel = client.channels.cache.get(process.env.CHANNEL_ID!) as TextChannel;
     
     if (!channel) {
@@ -63,7 +63,9 @@ app.get('/', (req, res) => {
   res.send('🤖 Bot is awake and running smoothly!');
 });
 
-// Start the web server
+// Start the web server RENDER
 app.listen(PORT, () => {
   console.log(`🌐 Keep-alive server listening on port ${PORT}`);
 });
+
+// Developed by MAV (author) 2024-05-27
