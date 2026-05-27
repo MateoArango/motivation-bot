@@ -1,27 +1,33 @@
-# Project Documentation Update
+# Project Update: Discord Motivation Bot
+
+The latest updates introduce an automated Discord bot service designed to fetch and deliver motivational content. The system has been optimized for modern Node.js environments and includes resilience features for cloud hosting.
 
 ## New Features & Components
 
-### 1. Discord Motivation Bot
-An automated service built with `discord.js` designed to deliver daily motivational content to specified channels.
-- **Automated Scheduling**: Integrated `node-cron` to trigger message delivery daily at 12:00 PM.
-- **ZenQuotes API Integration**: Connects to the ZenQuotes external API to fetch randomized motivational quotes and author attributions.
-- **Resilient Delivery Pipeline**: Includes a validation layer that verifies the integrity of the API response data before attempting to dispatch messages, ensuring the bot handles empty or malformed datasets gracefully.
+### Discord Motivation Bot
+The core bot service has been enhanced with automated scheduling and external API integration:
+- **Automated Scheduling**: Utilizes `node-cron` to automatically dispatch motivational messages at a set time (12:00 PM daily).
+- **Dynamic Content Fetching**: Integrated the **ZenQuotes API** to provide unique, randomized quotes and author attributions.
+- **Resilient Delivery (QA Validation)**: Implemented a validation layer that verifies the integrity of API responses (ensuring the dataset is not empty) before attempting to send messages, preventing runtime crashes.
 
-### 2. Keep-Alive Web Server
-A lightweight **Express** server integrated into the bot's process to maintain service uptime.
-- **Health Check Endpoint**: Provides a `GET /` route that returns a status message. This allows external monitoring tools or hosting platforms (like Render or Heroku) to ping the service and prevent it from entering an idle or "sleep" state.
+### Keep-Alive Web Server
+To ensure the bot remains active on hosting providers with auto-sleep functionality (such as Render or Heroku), a lightweight **Express** server is now included.
+- **Health Check Endpoint**: A `GET /` route provides a status message indicating the bot's operational state.
 
-### 3. Technical Infrastructure & Security
-- **TypeScript Optimization**: The project configuration has been updated to use `nodenext` module resolution and `esnext` targets, ensuring compatibility with modern Node.js environments.
-- **Environment Isolation**: The `.gitignore` has been updated to strictly exclude `.env` files, preventing the accidental exposure of sensitive credentials.
+### Security & Environment Isolation
+- **Credential Protection**: The `.gitignore` file has been updated to strictly exclude `.env` files, preventing sensitive bot tokens from being committed to version control.
 
 ## Configuration & Environment Variables
 
-The application now requires several environment variables for proper authentication and functionality. These should be defined in a `.env` file at the project root:
+The application requires the following environment variables to be defined in a local `.env` file:
 
-| Variable | Description | Required | Default |
-| :--- | :--- | :--- | :--- |
-| `DISCORD_TOKEN` | The authentication token for the Discord Bot. | **Yes** | - |
-| `CHANNEL_ID` | The specific Discord Text Channel ID where quotes will be broadcast. | **Yes** | - |
-| `PORT` | The port used by the Express keep-alive server. | No | `3000` |
+| Variable | Description | Required |
+| :--- | :--- | :--- |
+| `DISCORD_TOKEN` | The authentication token for the Discord Bot application. | Yes |
+| `CHANNEL_ID` | The specific Snowflake ID of the Discord Text Channel where quotes will be posted. | Yes |
+| `PORT` | The network port for the Express keep-alive server (defaults to `3000`). | No |
+
+## Technical Specifications
+- **TypeScript Runtime**: Configured with `nodenext` module resolution and `esnext` target for modern ESM compatibility.
+- **Permissions**: Operates using `GatewayIntentBits.Guilds` for minimal, secure bot permissions.
+- **Module Support**: Employs `dotenv` for secure environment variable management.
