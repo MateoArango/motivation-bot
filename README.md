@@ -2,35 +2,26 @@
 
 ## New Features & Components
 
-### Discord Motivation Bot
-An automated service designed to deliver daily motivational content to a specified Discord channel.
-- **Automated Scheduling**: Utilizes `node-cron` to trigger message delivery. The default schedule is set to **12:00 PM daily**.
-- **ZenQuotes API Integration**: Fetches dynamic content from the ZenQuotes API, including randomized quotes and author attribution.
-- **Data Validation Layer**: Includes a QA-focused check to ensure the API response is valid and non-empty before attempting to post to Discord, preventing empty messages or bot crashes.
+### 1. Discord Motivation Bot
+An automated service built with `discord.js` designed to deliver daily motivational content to specified channels.
+- **Automated Scheduling**: Integrated `node-cron` to trigger message delivery daily at 12:00 PM.
+- **ZenQuotes API Integration**: Connects to the ZenQuotes external API to fetch randomized motivational quotes and author attributions.
+- **Resilient Delivery Pipeline**: Includes a validation layer that verifies the integrity of the API response data before attempting to dispatch messages, ensuring the bot handles empty or malformed datasets gracefully.
 
-### Keep-Alive Health Monitor
-To ensure high availability on hosting platforms with auto-sleep functionality (such as Render or Heroku), a lightweight **Express** web server has been integrated.
-- **Health Check Endpoint**: Exposes a `GET /` route that returns a status message confirming the bot's operational state.
+### 2. Keep-Alive Web Server
+A lightweight **Express** server integrated into the bot's process to maintain service uptime.
+- **Health Check Endpoint**: Provides a `GET /` route that returns a status message. This allows external monitoring tools or hosting platforms (like Render or Heroku) to ping the service and prevent it from entering an idle or "sleep" state.
 
-### Security & Environment Isolation
-- **Credential Protection**: The `.gitignore` has been updated to exclude `.env` files, preventing the accidental exposure of sensitive Discord tokens in version control.
+### 3. Technical Infrastructure & Security
+- **TypeScript Optimization**: The project configuration has been updated to use `nodenext` module resolution and `esnext` targets, ensuring compatibility with modern Node.js environments.
+- **Environment Isolation**: The `.gitignore` has been updated to strictly exclude `.env` files, preventing the accidental exposure of sensitive credentials.
 
 ## Configuration & Environment Variables
 
-The application requires the following environment variables to function correctly. These should be defined in a `.env` file in the root directory:
+The application now requires several environment variables for proper authentication and functionality. These should be defined in a `.env` file at the project root:
 
 | Variable | Description | Required | Default |
 | :--- | :--- | :--- | :--- |
-| `DISCORD_TOKEN` | The secret authentication token for your Discord Bot. | **Yes** | N/A |
-| `CHANNEL_ID` | The unique Snowflake ID of the Discord text channel where quotes will be posted. | **Yes** | N/A |
-| `PORT` | The network port for the Express keep-alive server. | No | `3000` |
-
-## Technical Specifications
-
-- **Runtime**: Node.js
-- **Language**: TypeScript (Target: `esnext`, Module Resolution: `nodenext`)
-- **Key Libraries**:
-    - `discord.js`: Bot interactions and Gateway communication.
-    - `node-cron`: Task scheduling.
-    - `express`: Web server for health monitoring.
-    - `dotenv`: Secure environment variable management.
+| `DISCORD_TOKEN` | The authentication token for the Discord Bot. | **Yes** | - |
+| `CHANNEL_ID` | The specific Discord Text Channel ID where quotes will be broadcast. | **Yes** | - |
+| `PORT` | The port used by the Express keep-alive server. | No | `3000` |
