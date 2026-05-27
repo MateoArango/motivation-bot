@@ -3,28 +3,26 @@
 ## New Features & Components
 
 ### Discord Motivation Bot
-The core service has been updated to automate the delivery of motivational content to Discord servers using an asynchronous architecture.
-- **Automated Scheduling**: Utilizes `node-cron` to trigger messages daily at `12:00 PM` server time (calibrated for `7:00 AM` Colombia time, accounting for a 5-hour offset).
-- **External API Integration**: Fetches randomized quotes and author metadata from the **ZenQuotes API**.
-- **Resilient Delivery Layer**: Implements a validation check to verify API response integrity before processing. This ensures the bot handles empty datasets or network failures gracefully without crashing.
+The core automation service has been enhanced to deliver daily motivational content using a more robust asynchronous architecture.
+- **Smart Scheduling**: Implemented `node-cron` to automate message delivery. The bot is configured to trigger daily at `12:00 PM` server time (calibrated for `10:00 AM` Colombia time), ensuring consistent delivery across different time zones.
+- **Dynamic Content Integration**: Integration with the **ZenQuotes API** allows the bot to fetch randomized motivational quotes along with author metadata dynamically.
+- **Validation & Reliability**: Added a resilient delivery layer that performs integrity checks on API responses. This prevents the bot from attempting to send empty or malformed messages in the event of an external service disruption.
 
 ### Keep-Alive Web Server
-A lightweight **Express** server is now integrated to maintain bot activity on hosting providers that utilize auto-sleep or idling features.
-- **Health Check Endpoint**: A `GET /` route provides a status message confirming the bot's operational state.
-- **Cloud Optimization**: Specifically configured for seamless deployment on platforms like **Render** or **Heroku**.
+To support hosting on cloud platforms with auto-sleep functionality (such as Render or Heroku), a lightweight **Express** web server has been integrated.
+- **Health Check Endpoint**: A `GET /` route is now available, returning a status message to confirm the bot's operational health.
+- **Service Continuity**: This server acts as a heartbeat to keep the process active during idle periods.
 
-### Security & Build Configuration
-- **Environment Isolation**: The `.gitignore` configuration ensures that `.env` files and sensitive credentials remain excluded from version control.
-- **Modern TypeScript Stack**: Updated to use `nodenext` module resolution and `esnext` targets for improved compatibility with modern Node.js environments.
-
----
+### Infrastructure & Security
+- **Strict Environment Isolation**: Security protocols have been updated in `.gitignore` to ensure `.env` files are never tracked, protecting sensitive API keys.
+- **Modern TypeScript Configuration**: The project has transitioned to `nodenext` module resolution and `esnext` targets, improving compatibility with modern Node.js environments and optimizing the build process.
 
 ## Environment Variables
 
-The application requires the following environment variables for successful configuration:
+The application requires the following environment variables to be configured in your `.env` file:
 
 | Variable | Description | Required | Default |
 | :--- | :--- | :--- | :--- |
-| `DISCORD_TOKEN` | The authentication token for the Discord Bot. | **Yes** | - |
-| `CHANNEL_ID` | The unique ID of the Discord Text Channel where quotes are sent. | **Yes** | - |
-| `PORT` | The network port for the Express keep-alive server. | No | `3000` |
+| `DISCORD_TOKEN` | The unique authentication token for your Discord Bot. | **Yes** | - |
+| `CHANNEL_ID` | The numerical ID of the Discord Text Channel where quotes will be posted. | **Yes** | - |
+| `PORT` | The port used by the Express keep-alive health check server. | No | `3000` |
