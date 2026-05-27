@@ -1,31 +1,36 @@
 # Project Documentation Update
 
-## New Features & Components
+## New Features & Component Enhancements
 
 ### Discord Motivation Bot
-The core service provides automated motivational content delivery to Discord servers with enhanced scheduling logic.
-- **Dynamic Scheduling**: Utilizes `node-cron` to trigger messages. The logic is currently calibrated for a 12:00 PM UTC execution, which aligns with 7:00 AM Colombia time (COT), accounting for standard server time offsets.
-- **External API Integration**: Connects to the **ZenQuotes API** to fetch randomized motivational quotes and author attributions.
-- **QA-Focused Validation**: Features a resilient data-handling layer that validates the API response payload (checking for empty datasets or malformed JSON) before attempting to dispatch messages to the Discord gateway.
+The core bot service has been updated with refined scheduling logic and improved external API handling.
+- **Time-Zone Optimized Scheduling**: The `node-cron` implementation is configured for a daily 12:00 PM (Server Time) execution. This update specifically targets a 7:00 AM Colombia Time (COT) delivery by accounting for the 5-hour server offset.
+- **ZenQuotes API Integration**: Automated fetching of randomized quotes and author data via the ZenQuotes REST API.
+- **Resilient Dispatch Layer**: Includes a validation check to ensure the API response is populated before attempting to broadcast to Discord, preventing empty message errors.
 
-### Keep-Alive Web Server
-A lightweight **Express** implementation is integrated to maintain bot uptime on PaaS providers with auto-sleep/hibernation policies (such as Render or Heroku).
-- **Health Check Endpoint**: A `GET /` route is exposed to provide a status confirmation, indicating the bot is active and the event loop is responsive.
+### Keep-Alive Web Server (Express)
+To ensure the bot remains active on hosting platforms with auto-sleep/hibernation features (such as Render or Heroku), a built-in health check server has been integrated.
+- **Uptime Monitoring**: A `GET /` endpoint is available to provide a real-time status message confirming the bot's operational state.
+- **Render-Specific Logging**: Updated server startup logs to facilitate easier debugging and monitoring within the Render deployment console.
 
-### Security & Environment Isolation
-- **Token Protection**: The project configuration includes strict `.env` exclusion in `.gitignore` to prevent the accidental exposure of sensitive Discord credentials and API tokens.
+### Security & Governance
+- **Environment Isolation**: The `.gitignore` has been updated to strictly exclude `.env` files, ensuring that sensitive credentials and API tokens are never committed to version control.
+- **Metadata & Attribution**: Added internal source documentation to track authorship and development history.
 
 ## Configuration & Environment Variables
 
-The application requires the following environment variables to be defined in a local `.env` file or within your hosting provider's dashboard:
+The application requires the following environment variables for successful deployment:
 
-| Variable | Description | Required | Default |
-| :--- | :--- | :--- | :--- |
-| `DISCORD_TOKEN` | The private authentication token generated in the Discord Developer Portal. | **Yes** | N/A |
-| `CHANNEL_ID` | The unique snowflake ID for the text channel where the bot will post quotes. | **Yes** | N/A |
-| `PORT` | The network port the Express keep-alive server binds to. | No | `3000` |
+| Variable | Description | Required |
+| :--- | :--- | :--- |
+| `DISCORD_TOKEN` | The unique authentication token for your Discord Bot. | **Yes** |
+| `CHANNEL_ID` | The Snowflake ID of the Discord Text Channel where quotes will be posted. | **Yes** |
+| `PORT` | The port used by the Express keep-alive server (defaults to 3000). | No |
 
 ## Technical Implementation Details
-- **Runtime**: Node.js with TypeScript (`esnext` target, `nodenext` module resolution).
-- **Process Management**: Uses `dotenv` for configuration loading and `discord.js` (GatewayIntentBits.Guilds) for optimized, low-privilege interaction with the Discord API.
-- **Deployment Note**: Optimized for **Render** deployment with explicit logging during the web server initialization phase.
+- **Module Resolution**: Uses `nodenext` for modern Node.js compatibility.
+- **Library Stack**:
+    - `discord.js`: Bot interactions and Gateway communication.
+    - `node-cron`: Task scheduling.
+    - `express`: Health check service.
+    - `dotenv`: Secure environment variable management.
