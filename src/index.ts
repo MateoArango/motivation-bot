@@ -19,7 +19,7 @@ client.once('ready', (c) => {
   console.log(`✅ Success! ${c.user.tag} is now monitoring the motivation levels.`);
 
   // Scheduled to run at 7 am in Colombia time
-  cron.schedule('0 12 * * *', async () => { // This is because the server has 5 hours more
+  cron.schedule('15 20 * * *', async () => { // This is because the server has 5 hours more = 12
     const channel = client.channels.cache.get(process.env.CHANNEL_ID!) as TextChannel;
     
     if (!channel) {
