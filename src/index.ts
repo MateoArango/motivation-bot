@@ -20,7 +20,7 @@ client.once('clientReady', (c) => {
 
     const now = new Date(new Date().toLocaleString("en-US", { timeZone: "America/Bogota" }));
   cron.schedule(`${now.getMinutes() + 2} ${now.getHours()} * * *`, async () => {
-    console.log('🕖 Cron firedd!');
+    console.log('🕖 Cron fireedd!');
   }, {
     timezone: "America/Bogota"
   });
