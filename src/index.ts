@@ -18,7 +18,7 @@ interface ZenQuote {
 client.once('clientReady', (c) => {
   console.log(`✅ Success! ${c.user.tag} is now monitoring the motivation levels.`);
 
-  const now = new Date();
+  const now = new Date(new Date().toLocaleString("en-US", { timeZone: "America/Bogota" }));
   cron.schedule(`${now.getMinutes() + 2} ${now.getHours()} * * *`, async () => {
     console.log('🕖 Cron fired!');
   }, {
