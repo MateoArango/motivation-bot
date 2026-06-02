@@ -18,14 +18,8 @@ interface ZenQuote {
 client.once('clientReady', (c) => {
   console.log(`✅ Success! ${c.user.tag} is now monitoring the motivation levels.`);
 
-    const now = new Date(new Date().toLocaleString("en-US", { timeZone: "America/Bogota" }));
-  cron.schedule(`${now.getMinutes() + 2} ${now.getHours()} * * *`, async () => {
-    console.log('🕖 Cron fireedd!');
-  }, {
-    timezone: "America/Bogota"
-  });
   // Scheduled to run at 7 am in Colombia time
-  cron.schedule('0 12 * * *', async () => { // This is because the server has 5 hours more = 12 = 7pm
+  cron.schedule('* * * * *', async () => { // This is because the server has 5 hours more = 12 = 7pm
     const channel = client.channels.cache.get(process.env.CHANNEL_ID!) as TextChannel;
     
     if (!channel) {
